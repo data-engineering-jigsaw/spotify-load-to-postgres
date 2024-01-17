@@ -29,28 +29,15 @@ def extract_tracks_info(tracks, playlist_id):
     return selected_tracks
 
 def write_to_csv(tracks):
-    current_date = str(date.today())
-    
     folder_path = "./data/"
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
-
     tracks_df = pd.DataFrame(tracks)
-    data_path = f"./data/{current_date}-track-listings.csv"
+    data_path = f"./data/track-listings.csv"
     tracks_df.to_csv(data_path)
 
 def find_recent_files(engine):
-    date = read_sql("select max(date) from tracks", engine).iloc[0, 0]
-    text_date = str(date)
-    files = os.listdir('./data')
-    
-    recent_files = []
-    for file in files:
-        file_date = file.replace('-track-listings.csv', '')
-        if file_date > text_date:
-            recent_files.append(file)
-    
-    return recent_files
+    pass
 
 def load_files_to_postgres():
     recent_files = find_recent_files(engine)
